@@ -4,15 +4,18 @@ export default class TodoList extends  React.Component {
     constructor(){
         super();
         this.state={msg: ["msg1","msg2","msg3"]};
+
         this.handleAdd = this.handleAdd.bind(this);
+
         this.handleInput = this.handleInput.bind(this);
         this.handleDel = this.handleDel.bind(this);
     }
     handleAdd(e){
-        this.setState({msg: [...this.state.msg, "msg4"]});
+        // this.setState({msg: [...this.state.msg, "msg4"]});
+        this.setState({msg: [...this.state.msg, this.myAdd.value]});
     }
     handleInput(e){
-        this.setState({msg: [...this.state.msg, e.target.value]});
+        // this.setState({msg: [...this.state.msg, e.target.value]});
     }
     handleDel(e){
         console.log(e.target.value);
@@ -24,7 +27,7 @@ export default class TodoList extends  React.Component {
         var i=0;
         return (
             <div>
-                <input type="text" onKeyUp={this.handleInput}/>
+                <input type="text" onKeyUp={this.handleInput} ref={(input)=>{this.myAdd = input;}}/>
 
 
                 <button onClick={this.handleAdd}>add</button>
