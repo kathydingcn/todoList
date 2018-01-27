@@ -33,10 +33,10 @@ export default class TodoList extends  React.Component {
     }
 
     handleDel(e){
-        // console.log(e.target.name);
+        console.log(e.target.name);
 
         this.setState({
-            itemList: this.state.itemList.filter((item,index)=>{return item.id!==e.target.value}),
+            itemList: this.state.itemList.filter((item,index)=>{return item.id!=e.target.value}),
             currentId: this.state.currentId ,
             inputValue: this.state.inputValue
         });
