@@ -1,9 +1,5 @@
 import React from 'react';
 
-import AddItemComponent from './addItem';
-import DelItemComponent from './delItem';
-import DoneItemComponent from './doneItem';
-
 export default class TodoList extends  React.Component {
     constructor(){
         super();
@@ -15,10 +11,11 @@ export default class TodoList extends  React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleDel = this.handleDel.bind(this);
-        this.handleDone = this.handleDone.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
 
     }
     handleChange(e){
+
         this.setState({
             itemList: this.state.itemList ,
             currentId: this.state.currentId,
@@ -36,50 +33,56 @@ export default class TodoList extends  React.Component {
     }
 
     handleDel(e){
+        console.log(e.target.name);
 
         this.setState({
             itemList: this.state.itemList.filter((item,index)=>{return item.id!=e.target.value}),
             currentId: this.state.currentId ,
             inputValue: this.state.inputValue
         });
+
     }
-    handleDone(e){
+    handleUpdate(e){
         console.log(e.target.value);
 
         var newState = {...this.state};
         newState.itemList.filter((item,index)=>{  console.log(item.id);
-                if(e.target.value == item.id){
-                    console.log("matched");
-                    newState.itemList[index].done = true;
-                }
+        if(e.target.value == item.id){
+                console.log("matched");
+                newState.itemList[index].done = true;
             }
-        );
+            }
+            );
         newState.currentId = this.state.currentId;
         newState.inputValue = this.state.inputValue;
 
         this.setState(newState);
-        e.target.innerHTML = "finished";
+        console.log(this.state);
+
     }
     render() {
+        let doneStyle = {backgroundColor:"green"};
+        let undoneStyle = {backgroundColor:"yellow"};
+        // console.log("before render",this.state);
 
         let itemList = this.state.itemList.map((item,index)=>{
             return <li key={item.id}  >{item.itemMsg}
 
-               {/* <button value={item.id} name="delBtn" onClick={this.handleDel}>X</button>
-                <button value={item.id} name="updateBtn" onClick={this.handleUpdate}>done?</button>*/}
-                <DelItemComponent myHandleDel={this.handleDel} itemId={item.id} />
-                <DoneItemComponent myHandleDone={this.handleDone} itemId={item.id}/>
-
+            <button value={item.id} name="delBtn" onClick={this.handleDel}>X</button>
+            <button value={item.id} name="updateBtn" onClick={this.handleUpdate}>done?</button>
             </li>
         });
+
         return (
             <div>
-
-                <AddItemComponent myHandleAdd={this.handleAdd} myHandleChange={this.handleChange} />
-                <ul>
-                    {itemList}
-                </ul>
-
+                <form action="" >
+                    <label htmlFor="itemInput">Please Enter Item:</label>
+                    <input type="text" id="itemInput" name="itemInput" onChange={this.handleChange}  />
+                    <input type="button" value="Add Item" onClick={this.handleAdd}/>
+                    <ul>
+                        {itemList}
+                    </ul>
+                </form>
 
             </div>
         );
