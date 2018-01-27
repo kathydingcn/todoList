@@ -65,8 +65,7 @@ export default class TodoList extends  React.Component {
         let itemList = this.state.itemList.map((item,index)=>{
             return <li key={item.id}  >{item.itemMsg}
 
-               {/* <button value={item.id} name="delBtn" onClick={this.handleDel}>X</button>
-                <button value={item.id} name="updateBtn" onClick={this.handleUpdate}>done?</button>*/}
+
                 <DelItemComponent myHandleDel={this.handleDel} itemId={item.id} />
                 <DoneItemComponent myHandleDone={this.handleDone} itemId={item.id}/>
 
